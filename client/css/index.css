@@ -1,0 +1,27 @@
+.mainContain {
+  height: 800px;
+  width: 800px;
+  border: 1px solid black;
+}
+
+.colorPicker {
+  height: 200px;
+  width: 800px;
+  border: 1px solid black;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.colorBox {
+  height: 30px;
+  width: 30px;
+  border: 1px solid black;
+}
+
+.dot {
+  width: 15px;
+  height: 15px;
+  border-radius: 50%;
+  position: absolute;
+}

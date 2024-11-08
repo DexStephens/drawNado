@@ -1,0 +1,6 @@
+# Server to ignore
+/server/dist
+/server/node_modules
+/server/.env
+
+# Client to ignore
