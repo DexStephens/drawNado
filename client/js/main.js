@@ -1,96 +1,128 @@
-window.onload = () => {
-  fillColorPallette();
-  addMouseListener();
-};
+class Draw {
+  rainbowColors = [
+    "#FF0000",
+    "#FF1100",
+    "#FF2200",
+    "#FF3300",
+    "#FF4400",
+    "#FF5500",
+    "#FF6600",
+    "#FF7700",
+    "#FF8800",
+    "#FF9900",
+    "#FFAA00",
+    "#FFBB00",
+    "#FFCC00",
+    "#FFDD00",
+    "#FFEE00",
+    "#FFFF00",
+    "#DFFF00",
+    "#BFFF00",
+    "#9FFF00",
+    "#80FF00",
+    "#40FF00",
+    "#00FF00",
+    "#00FF40",
+    "#00FF80",
+    "#00FFBF",
+    "#00FFFF",
+    "#00DFFF",
+    "#00BFFF",
+    "#009FFF",
+    "#0080FF",
+    "#8B4513",
+    "#808080",
+    "#000000",
+    "#FFFFFF",
+  ];
 
-const socket = io("http://localhost:3000");
+  drawColor = this.rainbowColors[0];
 
-const rainbowColors = [
-  "#FF0000",
-  "#FF1100",
-  "#FF2200",
-  "#FF3300",
-  "#FF4400",
-  "#FF5500",
-  "#FF6600",
-  "#FF7700",
-  "#FF8800",
-  "#FF9900",
-  "#FFAA00",
-  "#FFBB00",
-  "#FFCC00",
-  "#FFDD00",
-  "#FFEE00",
-  "#FFFF00",
-  "#DFFF00",
-  "#BFFF00",
-  "#9FFF00",
-  "#80FF00",
-  "#40FF00",
-  "#00FF00",
-  "#00FF40",
-  "#00FF80",
-  "#00FFBF",
-  "#00FFFF",
-  "#00DFFF",
-  "#00BFFF",
-  "#009FFF",
-  "#0080FF",
-  "#8B4513",
-  "#808080",
-  "#000000",
-  "#FFFFFF",
-];
+  constructor(document, communicate) {
+    this.document = document;
+    this.communicate = communicate;
+    this.isDrawing = false;
+    this.square = this.document.getElementById("mainContain");
 
-let drawColor = rainbowColors[0];
+    this.communicate.receive(this.receivedDot.bind(this));
+  }
 
-function fillColorPallette() {
-  const pallette = document.getElementById("colorPicker");
+  fillColorPallette() {
+    const pallette = this.document.getElementById("colorPicker");
 
-  rainbowColors.forEach((color) => {
-    const newBox = document.createElement("div");
-    newBox.classList.add("colorBox");
-    newBox.style.backgroundColor = color;
-    newBox.onclick = function (e) {
-      drawColor = color;
+    this.rainbowColors.forEach((color) => {
+      const newBox = this.document.createElement("div");
+      newBox.classList.add("colorBox");
+      newBox.style.backgroundColor = color;
+      newBox.onclick = (e) => {
+        this.drawColor = color;
+      };
+      pallette.appendChild(newBox);
+    });
+  }
+
+  addMouseListener() {
+    this.square.onmousedown = (e) => {
+      this.isDrawing = true;
     };
-    pallette.appendChild(newBox);
-  });
-}
 
-function addMouseListener() {
-  let isDrawing = false;
-  const square = document.getElementById("mainContain");
+    this.square.onmouseup = (e) => {
+      this.isDrawing = false;
+    };
 
-  square.onmousedown = (e) => {
-    isDrawing = true;
-  };
+    this.square.onmouseleave = (e) => {
+      this.isDrawing = false;
+    };
 
-  square.onmouseup = (e) => {
-    isDrawing = false;
-  };
+    this.square.onmousemove = (e) => {
+      this.draw(e);
+    };
 
-  square.onmouseleave = (e) => {
-    isDrawing = false;
-  };
+    this.square.onclick = (e) => {
+      this.draw(e, true);
+    };
+  }
 
-  square.onmousemove = (e) => {
-    if (isDrawing) {
-      const rect = square.getBoundingClientRect();
+  draw(e, start = this.isDrawing) {
+    if (start) {
+      const rect = this.square.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
-      addDot(square, x, y);
+      this.addDot(x, y);
     }
-  };
+  }
+
+  addDot(x, y, color = this.drawColor, reception = false) {
+    const dot = this.document.createElement("div");
+    dot.classList.add("dot");
+    dot.style.backgroundColor = color;
+    dot.style.left = `${x}px`;
+    dot.style.top = `${y}px`;
+    this.square.appendChild(dot);
+
+    if (!reception) {
+      this.communicate.send(x, y, color);
+    }
+  }
+
+  receivedDot({ left, top, color }) {
+    this.addDot(left, top, color, true);
+  }
 }
 
-function addDot(square, x, y) {
-  const dot = document.createElement("div");
-  dot.classList.add("dot");
-  dot.style.backgroundColor = drawColor;
-  dot.style.left = `${x}px`;
-  dot.style.top = `${y}px`;
-  square.appendChild(dot);
+class Communicate {
+  socket = new io("http://localhost:3000");
+
+  receive(callback) {
+    this.socket.on("draw", (e) => {
+      callback(e);
+    });
+  }
+
+  send(left, top, color) {
+    const event = { left, top, color };
+    this.socket.emit("draw", event);
+  }
 }
 
 function clearPicture() {
@@ -100,3 +132,15 @@ function clearPicture() {
     node.remove();
   });
 }
+
+const communicate = new Communicate();
+const draw = new Draw(document, communicate);
+
+window.onload = () => {
+  draw.fillColorPallette();
+  draw.addMouseListener();
+};
+
+// LEARNINGS
+// Understand the context of the function, this has to do with the challenge of the this.drawColor in the new box, the function() instantiation had the context of newBox, while the arrow function has the context of the class
+// How in the world does the bind function work for context of the current class

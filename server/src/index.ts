@@ -1,6 +1,9 @@
 import express from "express";
 import { Server } from "socket.io";
 import http from "http";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT;
@@ -18,6 +21,9 @@ const io = new Server(server, {
 // Sample Socket.io event
 io.on("connection", (socket) => {
   console.log("A user connected");
+  socket.on("draw", (e) => {
+    socket.broadcast.emit("draw", e);
+  });
   socket.on("disconnect", () => {
     console.log("User disconnected");
   });
@@ -29,3 +35,7 @@ server.listen(PORT, () => {
 });
 
 // POTENTIAL DESIGN PATTERNS: Facade
+
+//CHALLENGES:
+//  What if someone joins late?
+//  How to handle when a user clears the whole screen?
