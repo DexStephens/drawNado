@@ -1,16 +1,12 @@
 .mainContain {
-  height: 800px;
-  width: 800px;
+  min-height: 500px;
+  width: 70%;
   border: 1px solid black;
 }
 
 .colorPicker {
-  height: 200px;
   width: 800px;
-  border: 1px solid black;
   display: flex;
-  flex-wrap: wrap;
-  align-items: flex-start;
 }
 
 .colorBox {
@@ -24,4 +20,19 @@
   height: 15px;
   border-radius: 50%;
   position: absolute;
+}
+
+#drawGame {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+button {
+  border-radius: 10px;
+  padding: 5px;
+  background-color: black;
+  color: white;
 }
