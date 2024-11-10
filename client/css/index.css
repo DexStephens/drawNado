@@ -1,6 +1,6 @@
 .mainContain {
   min-height: 500px;
-  width: 70%;
+  width: 500px;
   border: 1px solid black;
 }
 
@@ -35,4 +35,39 @@ button {
   padding: 5px;
   background-color: black;
   color: white;
+}
+
+.row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#chat {
+  height: 500px;
+  width: 200px;
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+}
+
+.chatMessage {
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid black;
+}
+
+.chatMessage p {
+  padding: 0;
+  margin: 0;
+}
+
+.messageAuthor {
+  font-style: italic;
+}
+
+#chatForm {
+  margin-top: auto;
+  display: flex;
+  justify-content: space-between;
 }
