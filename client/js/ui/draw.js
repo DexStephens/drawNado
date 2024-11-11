@@ -85,10 +85,9 @@ export default class Draw {
 
   draw(e, start = this.isDrawing) {
     if (start) {
+      // NEEDSWORK: draw only if they are also within the right bounds of the rectangle
       const rect = this.square.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      this.addDot(x, y);
+      this.addDot(e.clientX, e.clientY);
     }
   }
 

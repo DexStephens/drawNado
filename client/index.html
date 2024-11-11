@@ -9,17 +9,21 @@
   <body>
     <section id="drawGame">
       <div class="row">
-        <div class="mainContain" id="mainContain"></div>
+        <div class="mainContain rounded" id="mainContain"></div>
         <div>
           <div id="chat"></div>
           <form id="chatForm">
-            <input type="text" placeholder="Write guess here..." />
-            <button type="button">Submit</button>
+            <input
+              id="chatInput"
+              type="text"
+              placeholder="Write guess here..."
+            />
+            <button id="chatSubmit" type="button">Submit</button>
           </form>
         </div>
       </div>
       <div class="colorPicker" id="colorPicker"></div>
-      <button id="clearPicture">Clear Screen</button>
+      <button id="clearPicture" class="bt">Clear Screen</button>
     </section>
     <script
       src="https://cdn.socket.io/4.8.0/socket.io.min.js"
