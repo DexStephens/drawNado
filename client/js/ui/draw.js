@@ -44,7 +44,7 @@ export default class Draw {
     this.isDrawing = false;
     this.square = this.document.getElementById("mainContain");
 
-    this.communicate.receive(this.receivedDot.bind(this));
+    this.communicate.receive("draw", this.receivedDot.bind(this));
   }
 
   fillColorPallette() {
@@ -100,7 +100,7 @@ export default class Draw {
     this.square.appendChild(dot);
 
     if (!reception) {
-      this.communicate.send(x, y, color);
+      this.communicate.send("draw", { x, y, color });
     }
   }
 

@@ -12,7 +12,7 @@ window.onload = () => {
   attachHelpers();
   draw.fillColorPallette();
   draw.addMouseListener();
-  chat.addMessage("test", "test");
+  chat.addChatFormListener();
 };
 
 // LEARNINGS

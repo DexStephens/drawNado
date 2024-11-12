@@ -2,6 +2,9 @@ export default class Chat {
   constructor(document, communicate) {
     this.document = document;
     this.communicate = communicate;
+    this.chatForm = this.document.getElementById("chatForm");
+
+    this.communicate.receive("message", this.receiveMessage.bind(this));
   }
 
   addMessage(author, guess) {
@@ -24,5 +27,22 @@ export default class Chat {
     newMessageRow.appendChild(content);
 
     return newMessageRow;
+  }
+
+  addChatFormListener() {
+    this.chatForm.onsubmit = (e) => {
+      e.preventDefault();
+      const chatInput = this.document.getElementById("chatInput");
+      const message = chatInput.value;
+      chatInput.value = "";
+      chatInput.focus();
+
+      this.addMessage("test", message);
+      this.communicate.send("message", { author: "test", guess: message });
+    };
+  }
+
+  receiveMessage({ author, guess }) {
+    this.addMessage(author, guess);
   }
 }
