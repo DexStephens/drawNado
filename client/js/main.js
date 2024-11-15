@@ -2,17 +2,23 @@ import Communicate from "./sockets/communicate.js";
 import Draw from "./ui/draw.js";
 import Chat from "./ui/chat.js";
 
-import { attachHelpers } from "./ui/helpers.js";
+import {
+  attachHelpers,
+  loadGames,
+  gameCardClickHandler,
+} from "./ui/helpers.js";
 
 const communicate = new Communicate();
 const draw = new Draw(document, communicate);
 const chat = new Chat(document, communicate);
 
 window.onload = () => {
-  attachHelpers();
-  draw.fillColorPallette();
-  draw.addMouseListener();
-  chat.addChatFormListener();
+  // attachHelpers();
+  // draw.fillColorPallette();
+  // draw.addMouseListener();
+  // chat.addChatFormListener();
+  loadGames();
+  gameCardClickHandler();
 };
 
 // LEARNINGS

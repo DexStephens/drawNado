@@ -7,7 +7,27 @@
     <title>DrawNado</title>
   </head>
   <body>
-    <section id="drawGame">
+    <section id="gameOptions" class="selections">
+      <div class="gameCard rounded" id="battleship">
+        <h1>Battleship</h1>
+      </div>
+      <div class="gameCard rounded" id="ticTacToe">
+        <h1>Tic-Tac Toe</h1>
+      </div>
+      <div class="gameCard rounded" id="scribble">
+        <h1>Scribble</h1>
+      </div>
+      <div class="gameCard rounded" id="sudoku">
+        <h1>Sudoku</h1>
+      </div>
+      <div class="gameCard rounded" id="crossword">
+        <h1>Crossword</h1>
+      </div>
+      <div class="gameCard rounded" id="lastGame">
+        <h1>Last Game</h1>
+      </div>
+    </section>
+    <!-- <section id="drawGame">
       <div class="row">
         <div class="mainContain rounded" id="mainContain"></div>
         <div>
@@ -24,7 +44,7 @@
       </div>
       <div class="colorPicker" id="colorPicker"></div>
       <button id="clearPicture" class="bt">Clear Screen</button>
-    </section>
+    </section> -->
     <script
       src="https://cdn.socket.io/4.8.0/socket.io.min.js"
       integrity="sha384-OoIbkvzsFFQAG88r+IqMAjyOtYDPGO0cqK5HF5Uosdy/zUEGySeAzytENMDynREd"
@@ -35,3 +55,6 @@
 </html>
 
 <!-- NEEDSWORK: chat inputs need to scroll when the chat starts to overflow with guesses -->
+<!-- NEXT STEPS: dockerize and get raspberry pi up and running, create the animated choose a game with cards for other games, fix the backend to handle different games running at once, fix the dots not being in the right place on different size screens -->
+<!-- MORE: How to handle late comers to the game, get them up to speed on guesses and the current image -->
+<!-- MORE: get the timer working, should be handled from the server to keep a single source of truth? Or from the one who starts drawing? -->

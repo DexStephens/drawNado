@@ -113,3 +113,43 @@ body {
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
 }
+
+.gameCard {
+  opacity: 0;
+  background-color: white;
+  border: 1px solid black;
+  text-align: center;
+  display: inline-block;
+  animation: cardLoad 2s forwards;
+  position: relative;
+}
+
+@keyframes cardLoad {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+.selections {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  row-gap: 20%;
+  column-gap: 5%;
+  padding: 2% 5%;
+  position: relative;
+}
+
+.fade-out {
+  animation: fadeOut 0.05s forwards;
+}
+
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+  }
+}
