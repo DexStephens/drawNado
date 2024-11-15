@@ -70,6 +70,7 @@ body {
   background-color: white;
   border-top-left-radius: 10px;
   border-top-right-radius: 10px;
+  overflow: scroll;
 }
 
 .chatMessage {
@@ -117,11 +118,12 @@ body {
 .gameCard {
   opacity: 0;
   background-color: white;
-  border: 1px solid black;
+  /* border: 1px solid black; */
   text-align: center;
   display: inline-block;
   animation: cardLoad 2s forwards;
   position: relative;
+  cursor: pointer;
 }
 
 @keyframes cardLoad {

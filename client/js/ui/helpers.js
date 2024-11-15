@@ -1,10 +1,4 @@
-function clearPicture() {
-  const square = document.getElementById("mainContain");
-
-  Array.from(square.childNodes).forEach((node) => {
-    node.remove();
-  });
-}
+import { startScribbleGame } from "./draw.js";
 
 function loadGames() {
   document.querySelectorAll(".gameCard").forEach((card, index) => {
@@ -49,16 +43,14 @@ function gameCardClickHandler() {
               delay: 175 * (index + 1),
             }
           );
+
+          if (card.id === "scribble") {
+            startScribbleGame();
+          }
         }
       });
     });
   });
 }
 
-function attachHelpers() {
-  document
-    .getElementById("clearPicture")
-    .addEventListener("click", clearPicture);
-}
-
-export { attachHelpers, loadGames, gameCardClickHandler };
+export { loadGames, gameCardClickHandler };

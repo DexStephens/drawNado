@@ -5,11 +5,13 @@ export default class Chat {
     this.chatForm = this.document.getElementById("chatForm");
 
     this.communicate.receive("message", this.receiveMessage.bind(this));
+    this.addChatFormListener();
   }
 
   addMessage(author, guess) {
     const chatBox = this.document.getElementById("chat");
     chatBox.appendChild(this.createChatMessage(author, guess));
+    this.bottomOfChat();
   }
 
   createChatMessage(author, guess) {
@@ -44,5 +46,10 @@ export default class Chat {
 
   receiveMessage({ author, guess }) {
     this.addMessage(author, guess);
+  }
+
+  bottomOfChat() {
+    const chatMessages = this.document.getElementById("chat");
+    chatMessages.scrollTop = chatMessages.scrollHeight;
   }
 }

@@ -1,3 +1,6 @@
+import Communicate from "../sockets/communicate.js";
+import Chat from "./chat.js";
+
 export default class Draw {
   rainbowColors = [
     "#FF0000",
@@ -45,6 +48,23 @@ export default class Draw {
     this.square = this.document.getElementById("mainContain");
 
     this.communicate.receive("draw", this.receivedDot.bind(this));
+    this.attachHelpers();
+    this.fillColorPallette();
+    this.addMouseListener();
+  }
+
+  attachHelpers() {
+    this.document
+      .getElementById("clearPicture")
+      .addEventListener("click", this.clearPicture);
+  }
+
+  clearPicture() {
+    const square = document.getElementById("mainContain");
+
+    Array.from(square.childNodes).forEach((node) => {
+      node.remove();
+    });
   }
 
   fillColorPallette() {
@@ -107,4 +127,14 @@ export default class Draw {
   receivedDot({ left, top, color }) {
     this.addDot(left, top, color, true);
   }
+}
+
+export function startScribbleGame() {
+  const drawTemplate = document.getElementById("drawTemplate");
+  const clone = drawTemplate.content.cloneNode(true);
+  document.body.appendChild(clone);
+
+  const communicate = new Communicate();
+  new Chat(document, communicate);
+  const draw = new Draw(document, communicate);
 }
